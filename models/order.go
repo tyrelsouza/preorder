@@ -25,3 +25,15 @@ type CreateOrderInput struct {
 type UpdateOrderInput struct {
 	Title string `json:"title"`
 }
+
+func NewOrder(id uint, title string, author uint, format uint, isbn_13 uint, release_date time.Time) Order {
+	order := Order{
+		ID:          id,
+		Title:       title,
+		AuthorID:    author,
+		FormatID:    format,
+		ISBN13:      isbn_13,
+		ReleaseDate: release_date,
+	}
+	return order
+}

@@ -31,12 +31,9 @@ func CreateAuthor(c *gin.Context) {
 		return
 	}
 
-	Author := models.Author{
-		ID:       input.ID,
-		FullName: input.FullName,
-	}
-	models.DB.Create(&Author)
-	c.JSON(http.StatusOK, gin.H{"data": Author})
+	author := models.NewAuthor(input.ID, input.FullName)
+	models.DB.Create(&author)
+	c.JSON(http.StatusOK, gin.H{"data": author})
 }
 
 func UpdateAuthor(c *gin.Context) {

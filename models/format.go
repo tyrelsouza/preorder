@@ -13,3 +13,11 @@ type CreateFormatInput struct {
 type UpdateFormatInput struct {
 	Format string `json:"format"`
 }
+
+func NewFormat(id uint, format_name string) Format {
+	format := Format{
+		ID:     id,
+		Format: format_name,
+	}
+	return format
+}

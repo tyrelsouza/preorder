@@ -31,12 +31,9 @@ func CreateFormat(c *gin.Context) {
 		return
 	}
 
-	Format := models.Format{
-		ID:     input.ID,
-		Format: input.Format,
-	}
-	models.DB.Create(&Format)
-	c.JSON(http.StatusOK, gin.H{"data": Format})
+	format := models.NewFormat(input.ID, input.Format)
+	models.DB.Create(&format)
+	c.JSON(http.StatusOK, gin.H{"data": format})
 }
 
 func UpdateFormat(c *gin.Context) {

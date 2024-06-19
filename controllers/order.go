@@ -31,16 +31,9 @@ func CreateOrder(c *gin.Context) {
 		return
 	}
 
-	Order := models.Order{
-		ID:          input.ID,
-		Title:       input.Title,
-		AuthorID:    input.Author,
-		FormatID:    input.Format,
-		ISBN13:      input.ISBN13,
-		ReleaseDate: input.ReleaseDate,
-	}
-	models.DB.Create(&Order)
-	c.JSON(http.StatusOK, gin.H{"data": Order})
+	order := models.NewOrder(input.ID, input.Title, input.Author, input.Format, input.ISBN13, input.ReleaseDate)
+	models.DB.Create(&order)
+	c.JSON(http.StatusOK, gin.H{"data": order})
 }
 
 func UpdateOrder(c *gin.Context) {

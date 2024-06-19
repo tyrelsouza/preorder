@@ -13,3 +13,11 @@ type CreateAuthorInput struct {
 type UpdateAuthorInput struct {
 	FullName string `json:"full_name"`
 }
+
+func NewAuthor(id uint, full_name string) Author {
+	author := Author{
+		ID:       id,
+		FullName: full_name,
+	}
+	return author
+}
