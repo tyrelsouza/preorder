@@ -21,6 +21,7 @@ func ConnectDatabase() {
 	_ = db.AutoMigrate(&Author{})
 	_ = db.AutoMigrate(&Format{})
 	_ = db.AutoMigrate(&Order{})
+	_ = db.AutoMigrate(&User{})
 
 	DB = db
 }
