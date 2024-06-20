@@ -1,4 +1,4 @@
-package models
+package authors
 
 type Author struct {
 	ID       uint   `json:"id" gorm:"primary_key"`

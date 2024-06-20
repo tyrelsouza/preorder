@@ -1,16 +1,20 @@
-package models
+package orders
 
-import "time"
+import (
+	"preorder/authors"
+	"preorder/formats"
+	"time"
+)
 
 type Order struct {
 	ID          uint   `json:"id" gorm:"primary_key"`
 	Title       string `json:"title"`
 	AuthorID    uint   `json:"author"`
-	Author      Author
+	Author      authors.Author
 	ReleaseDate time.Time `json:"release_date" gorm:"column:release_date"`
 	ISBN13      uint      `json:"isbn_13" gorm:"column:isbn_13"`
 	FormatID    uint      `json:"format"`
-	Format      Format
+	Format      formats.Format
 }
 
 type CreateOrderInput struct {

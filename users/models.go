@@ -1,4 +1,4 @@
-package models
+package users
 
 import (
 	"time"
@@ -23,9 +23,9 @@ type UpdateUserInput struct {
 
 func NewUser(id uint, username, password string, createdAt, updatedAt time.Time) User {
 	user := User{
-		ID:       id,
-		Username: username,
-		Password: password,
+		ID:        id,
+		Username:  username,
+		Password:  password,
 		CreatedAt: createdAt,
 		UpdatedAt: updatedAt,
 	}

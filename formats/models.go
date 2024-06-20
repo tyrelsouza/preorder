@@ -1,4 +1,4 @@
-package models
+package formats
 
 type Format struct {
 	ID     uint   `json:"id" gorm:"primary_key"`
