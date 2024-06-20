@@ -1,10 +1,16 @@
 package orders
 
 import (
+	"encoding/json"
+	"io"
+	"net/http"
 	"preorder/authors"
 	"preorder/formats"
+	"strconv"
 	"time"
 )
+
+const googleBooksAPI = "https://www.googleapis.com/books/v1/volumes?q=isbn:"
 
 type Order struct {
 	ID          uint   `json:"id" gorm:"primary_key"`
@@ -30,14 +36,38 @@ type UpdateOrderInput struct {
 	Title string `json:"title"`
 }
 
-func NewOrder(id uint, title string, author uint, format uint, isbn_13 uint, release_date time.Time) Order {
+func NewOrder(id uint, title string, author uint, format uint, isbn13 uint, releaseDate time.Time) Order {
 	order := Order{
 		ID:          id,
 		Title:       title,
 		AuthorID:    author,
 		FormatID:    format,
-		ISBN13:      isbn_13,
-		ReleaseDate: release_date,
+		ISBN13:      isbn13,
+		ReleaseDate: releaseDate,
 	}
 	return order
+}
+
+func (o *Order) fetchCoverImageURL() (string, error) {
+	resp, err := http.Get(googleBooksAPI + strconv.Itoa(int(o.ISBN13)))
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return "", err
+	}
+
+	var googleBooksResponse GoogleBooksResponse
+	if err := json.Unmarshal(body, &googleBooksResponse); err != nil {
+		return "", err
+	}
+
+	if len(googleBooksResponse.Items) > 0 {
+		return googleBooksResponse.Items[0].VolumeInfo.ImageLinks.Thumbnail, nil
+	}
+
+	return "", nil
 }

@@ -3,7 +3,7 @@ FROM debian:latest
 
 # Update the package list and install MySQL client
 RUN apt-get update && apt-get install -y \
-    mariadb-client \
+    mariadb-client ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy the preorder binary from the local directory into the container

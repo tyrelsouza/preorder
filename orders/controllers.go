@@ -24,6 +24,21 @@ func FindOrder(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": order})
 }
 
+func FindOrderCover(c *gin.Context) {
+	var order Order
+
+	if err := config.DB.Where("id = ?", c.Param("id")).First(&order).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+	}
+	cover, err := order.fetchCoverImageURL()
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"cover_url": cover})
+}
+
 func CreateOrder(c *gin.Context) {
 	var input CreateOrderInput
 	if err := c.ShouldBindJSON(&input); err != nil {
